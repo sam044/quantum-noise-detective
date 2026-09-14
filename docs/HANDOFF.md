@@ -1,15 +1,23 @@
 # Quantum Noise Detective — new-chat handoff
 
 Updated 2026-09-13. This is a project handoff, not a full conversation export.
-No deployment or publication was performed while preparing it.
+The original local handoff is retained below with subsequent deployment and publication updates.
 
 ## Start here and next objective
 
 Deployment update 2026-09-13: Sam bought `samuelflynn.dev`, signed into Railway,
 approved $10-15/month hosting, and personally activated Hobby billing. The app
 is deployed at **https://quantum.samuelflynn.dev**. See `docs/OPERATIONS.md`
-for exact resources, deployment, backups and recovery. GitHub publication and
-the detailed video explanation remain the next user steps.
+for exact resources, deployment, backups and recovery. The usage guide and
+detailed video explanation remain deferred at Sam's request.
+
+GitHub publication update 2026-09-13: the source is public at
+https://github.com/sam044/quantum-noise-detective. The default branch is
+`codex/initial-release`, tracked by local remote `origin`. Initial source commit
+`535068d` was pushed successfully. Credentials, generated models, datasets and
+SQLite history are excluded. GitHub Actions was queued after publication;
+remote validation has not yet been confirmed. Railway remains deployed from
+the existing release; publishing this repository did not configure automatic deployment.
 
 Current deployment: `850dbd1e-7bd2-4a3d-99a7-280dfdfdfecd`, Railway SUCCESS.
 The custom domain is verified with a valid managed HTTPS certificate. DNS uses
