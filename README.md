@@ -7,7 +7,32 @@ Hosted usage: open the demo, generate an experiment, compare methods, then revea
 Continuing development in a new chat? Start with [the project handoff](docs/HANDOFF.md)
 and the project instructions in [AGENTS.md](AGENTS.md).
 
-A working local lab for diagnosing energy relaxation and pure dephasing in a simulated qubit. Compare conventional statistical fitting with models trained in **PyTorch** and **TensorFlow**, inspect uncertainty, reveal hidden simulator parameters, and reopen saved experiments.
+Quantum Noise Detective is an interactive lab that asks: **can we work out how a simulated qubit is losing information just by looking at its measurements?** You create an experiment, let three methods diagnose it, and reveal the hidden answer to see how close they came. Everything runs on an ordinary computer; no quantum hardware is needed.
+
+## The idea, without the quantum background
+
+A normal computer bit stores a 0 or a 1. A **qubit** also gives a 0 or 1 when measured in the usual way, but before measurement it can be in a **superposition** of those two states. That state has more structure than a simple probability of getting 0 or 1: it also has a relationship called *phase*, which affects what we observe when we change how we measure it. This choice of how to measure is called the **measurement basis**.
+
+You do not need to calculate any of this to use the lab. Think of a qubit as carrying two things we want to preserve: its energy and its quantum coherence. This project simulates two ways they can deteriorate:
+
+| Type of noise | Intuition | What the lab estimates |
+| --- | --- | --- |
+| **Energy relaxation** | Like a charged battery gradually losing energy, an excited qubit can fall back to its lower-energy state. | How quickly that energy is lost. |
+| **Pure dephasing** | Like clocks drifting out of sync across repeated experiments, the phase becomes less consistent, weakening the observable quantum pattern without directly changing the energy populations. | How quickly that phase consistency is lost. |
+
+These are analogies for the simulated behavior. The simulator uses a specific mathematical model of a single qubit, rather than a complete model of every noise source in a real quantum computer.
+
+## How an experiment works
+
+1. **Set up a mystery.** The simulator chooses hidden rates for relaxation and dephasing, or you choose them yourself in custom mode. Those rates are the answer the diagnosis methods will try to recover.
+2. **Collect two sets of clues.** One experiment prepares the qubit in its excited state and checks how much excited-state population remains after different delays. The other prepares a superposition and measures in a different basis to track its coherence. Both relaxation and pure dephasing affect coherence, so the energy experiment helps separate their contributions. Energy measurements alone cannot reveal pure dephasing.
+3. **Repeat the measurements.** A single measurement gives one outcome, not a smooth curve. By default, the simulator repeats each preparation-and-measurement experiment 256 times at each of 64 delays. Each repetition is called a **shot**. The resulting counts fluctuate naturally, so the methods must work with imperfect clues.
+4. **Compare three diagnoses.** Conventional statistical fitting searches for noise rates that make the observed counts most likely under the physics model. Two neural networks, trained separately in **PyTorch** and **TensorFlow**, learn the connection between measurement patterns and noise rates from synthetic examples with known answers. They then estimate rates for a new experiment from its counts. The hidden answer is never an input to any diagnosis method.
+5. **Reveal and check.** Compare the estimated rates and reconstructed curves, inspect the neural models' uncertainty intervals, then reveal the simulator's true rates. Those intervals are calibrated on separate examples; they are not a promise that every answer falls inside them. Export the results as JSON if you want to keep them.
+
+**Larger rates mean faster deterioration.** The dashboard also shows characteristic times: **T1** describes energy relaxation, **Tφ** describes pure dephasing, and **T2** describes coherence loss from both effects together. Longer times mean the corresponding property lasts longer.
+
+The point is to compare a physics-based fitting method with learned shortcuts on the same task. In the recorded benchmark below, conventional fitting gives the smallest errors, while the neural models produce estimates faster. This is a simulation and machine-learning comparison, not a claim of quantum-computational speedup or validation on real hardware.
 
 ## Run on this machine
 
