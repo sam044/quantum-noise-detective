@@ -1,0 +1,33 @@
+# Python and tools
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Generated experiments, data, models, and reports
+data/
+artifacts/
+runs/
+.runtime/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Editors and OS
+.idea/
+Thumbs.db
+.DS_Store

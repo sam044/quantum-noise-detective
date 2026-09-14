@@ -1,0 +1,17 @@
+# Direct dependencies for Python 3.12, Windows CPU development.
+# Install the CPU torch wheel first as described in docs/SETUP.md.
+# requirements-lock-windows-py312.txt captures the verified environment.
+numpy>=1.26,<3
+scipy>=1.14,<2
+qutip>=5,<6
+torch>=2,<3
+tensorflow>=2.16,<3
+scikit-learn>=1.5,<2
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+pydantic>=2,<3
+streamlit>=1.40,<2
+plotly>=5.24,<7
+httpx>=0.27,<1
+pytest>=8,<10
+ruff>=0.9,<1

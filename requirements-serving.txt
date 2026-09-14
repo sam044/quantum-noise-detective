@@ -1,0 +1,10 @@
+# Tested Windows versions; Linux image build and integration tests validate portability.
+numpy==2.5.3
+scipy==1.18.1
+fastapi==0.141.1
+uvicorn==0.52.4
+pydantic==2.13.5
+streamlit==1.63.0
+plotly==6.9.0
+httpx==0.28.1
+pandas==3.0.5

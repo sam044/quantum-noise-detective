@@ -1,0 +1,28 @@
+name: Verify scientific pipeline
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      QND_DATA_DIR: ${{ github.workspace }}/.runtime
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install pinned environment
+        run: python -m pip install -r requirements-lock-windows-py312.txt --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Install project
+        run: python -m pip install -e . --no-deps
+      - name: Lint
+        run: python -m ruff check src tests dashboard scripts launch.py
+      - name: Reproduce training and tests
+        run: python scripts/reproduce.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-and-models
+          path: .runtime/
