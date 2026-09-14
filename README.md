@@ -101,6 +101,16 @@ python scripts/reproduce.py
 
 Use the project's Python interpreter. The reproduction script generates a separate dataset, trains, evaluates, and tests in `~/.quantum-noise-detective-reproduction/` unless `QND_DATA_DIR` is set. It does not overwrite live experiments by default. Twenty tests do not require trained models; two integration tests use actual trained artifacts. GitHub Actions is configured to install, train, evaluate, and test on Windows when the repository is published.
 
+## How I built it
+
+I built the backend in Python, starting with a simulator that turns two noise rates into measurement probabilities and generates random measurement counts from them. This gives me experiments with known answers, so I can train models and check how well they recover those answers from measurements alone.
+
+For the machine-learning side, I trained two separate neural networks: one in **PyTorch** and one in **TensorFlow/Keras**. Each takes 128 measurement values—the two experiments at 64 delays—and passes them through hidden layers of 128 and 64 neurons to estimate the two noise rates. During training, the networks adjust their weights to reduce prediction errors. I use separate validation data to select the best weights, calibration data to build uncertainty intervals, and held-out test data to evaluate the final models.
+
+I also included a **SciPy statistical fitting baseline** that estimates the rates directly from the physics model. Comparing against it lets me evaluate whether the neural networks offer a useful tradeoff between error and speed. The trained network weights are exported to a lightweight NumPy runtime for the app, with predictions checked against the original PyTorch and TensorFlow outputs.
+
+**FastAPI** connects the simulator and diagnosis methods to the interface, while **SQLite** stores experiment history. The frontend uses **Streamlit and Plotly** for controls, measurement plots, and model comparisons. I used **Codex extensively to help with frontend development and deployment**, including getting the app running on Railway with a custom domain.
+
 ## Architecture
 
 ```mermaid

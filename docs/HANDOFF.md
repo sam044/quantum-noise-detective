@@ -13,7 +13,7 @@ detailed video explanation remain deferred at Sam's request.
 
 GitHub publication update 2026-09-13: the source is public at
 https://github.com/sam044/quantum-noise-detective. The default branch is
-`codex/initial-release`, tracked by local remote `origin`. Initial source commit
+`initial-release` (renamed from `codex/initial-release` at Sam's request), tracked by local remote `origin`. Initial source commit
 `535068d` was pushed successfully. Credentials, generated models, datasets and
 SQLite history are excluded. GitHub Actions was queued after publication;
 remote validation has not yet been confirmed. Railway remains deployed from
